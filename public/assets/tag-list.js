@@ -22,7 +22,7 @@ $(document).ready(function(){
   
         var tag = $(this).text().trim();
 
-        console.log(tag);
+        // console.log(tag);
 
         $.ajax({
           type: 'DELETE',
