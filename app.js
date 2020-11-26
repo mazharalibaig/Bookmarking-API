@@ -14,5 +14,5 @@ controller(app);
 
 //listen to port    
 app.listen(portNumber,'0.0.0.0', () => {
-    console.log('You are listening to port 3000');
+    console.log(`You are listening to port ${portNumber}`);
 });

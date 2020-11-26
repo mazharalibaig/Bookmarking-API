@@ -3,10 +3,29 @@ var bodyParser = require('body-parser');
 
 require('dotenv').config();
 
-// mongoose.connect(process.env.MONGO_URL,{useNewUrlParser: true});
+mongoose.connect(process.env.MONGO_URL,{useNewUrlParser: true});
+
+var Schema = mongoose.Schema;
+
+var tagSchema = new Schema({
+
+    tagname: String
+
+},{timestamps: true});
+
+var tagsDatabase = mongoose.model('tags', tagSchema);
+
+// var tag1 = tags({tagname: "tagnamefrommongodb"}).save((err) => {
+
+//     if(err)
+//         throw err;
+    
+//     console.log("Object inserted");
+
+// });
 
 var data = [{ bookmarkUrl:'www.xyz.com', bookmarkTitle: 'asdfsa', bookmarkPublisher: 'adsfgsfd',bookmarkTags: ['tag1','tag2','tag3']},{bookmarkUrl:'www.xyz.com', bookmarkTitle: 'asdfsa', bookmarkPublisher: 'adsfgsfd',bookmarkTags: ['tag1','tag2','tag3']}];
-var tags = [{tagname: 'politics'},{tagname: 'science'},{tagname: 'sports'}];
+// var tags = [{tagname: 'politics'},{tagname: 'science'},{tagname: 'sports'}];
 
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
 
@@ -39,21 +58,53 @@ module.exports = function(app){
 
     app.get('/tags', (req,res) => {
 
-        // console.log("ALL IS WELL!!\n");
+        tagsDatabase.find({}, (err,data) => {
 
-        res.render('tags',{tags: tags});
+            if(err)
+                throw err;
 
+            console.log(data);
+            
+            res.render('tags',{tags: data}); 
+        });
     });
 
     app.post('/tags',urlencodedParser,(req,res) => {
 
-        // console.log(req.body.tagname + 'from tag post');
+        console.log(req.body);
 
-        tags.push(req.body);
+        tagsDatabase(req.body).save((err,data) => {
+
+                if(err)
+                    throw err;
+
+                console.log(data);
+
+                res.render('tags',{tags: data});
+            
+            });
 
         // console.log(tags);
+    });
+
+    app.delete('/tags/:item',(req,res) => {
+        
+        console.log(req.params.item);
+
+        var newTags = [];
+        
+        for(var i=0;i<tags.length;i++)
+        {
+            if(tags[i].tagname!==req.params.item.trim())
+                newTags.push(tags[i]);
+        }
+
+        tags = newTags;
+
+        console.log(newTags);
 
         res.render('tags',{tags: tags});
+
     });
 
 };

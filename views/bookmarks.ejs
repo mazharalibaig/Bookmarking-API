@@ -13,11 +13,11 @@
     <a href="/" style="text-decoration: none; color: inherit;"><h1>My Bookmarks</h1></a>
     <div id="bookmarks-list">
         <form action="/bookmarks" method="POST">
-            <input type="text" name="bookmarkUrl" placeholder="Insert URL" required />
-            <input type="text" name="bookmarkTitle" placeholder="Title of article" required />
-            <input type="text" name="bookmarkPublisher" placeholder="Publisher of article" required />
-            <input type="text" name="bookmarkTags" placeholder="Tags of article seperated by spaces" required />
-            <button type="submit" for="bookmarks">Add Bookmark!</button>
+            <input type="text" class="bookmark-input" name="bookmarkUrl" placeholder="Insert URL" required />
+            <input type="text" class="bookmark-input" name="bookmarkTitle" placeholder="Title of article" required />
+            <input type="text" class="bookmark-input" name="bookmarkPublisher" placeholder="Publisher of article" required />
+            <input type="text" class="bookmark-input" name="bookmarkTags" placeholder="Tags of article seperated by spaces" required />
+            <button type="submit" id="bookmark-button" for="bookmarks">Add Bookmark!</button>
         </form>
         <ul>
             <% for(var i=0;i<bookmarks.length;i++){ %>
