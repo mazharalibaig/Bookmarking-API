@@ -32,4 +32,19 @@ module.exports = function(app){
         res.render('bookmarks',{bookmarks: data});
     });
 
+    app.get('/tags', (req,res) => {
+
+        console.log("ALL IS WELL!!\n");
+
+        res.render('tags',{bookmarks: data});
+
+    });
+
+    app.post('/tags',urlencodedParser,(req,res) => {
+
+        console.log(req.body);
+
+        res.render('tags',{bookmarks: data});
+    });
+
 };

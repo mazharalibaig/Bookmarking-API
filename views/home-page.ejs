@@ -10,11 +10,15 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>My Bookmarks</h1>
+    <h1>Bookmarking API</h1>
     <div class="container" >
         <div class="center">
-            <button class="homepage-buttons">Bookmarks</button>
-            <button class="homepage-buttons">Tags</button>
+            <form action="/bookmarks" method="get">
+                <button class="homepage-buttons">Bookmarks</button>
+            </form>
+            <form action="/tags" method="get">
+                <button class="homepage-buttons">Tags</button>
+            </form>
         </div>
     </div>
 </body>
