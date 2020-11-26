@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mazhar's To-do</title>
+    <title>Bookmarking API</title>
     <link rel="stylesheet" href="/assets/styles.css" type="text/css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="assets/bookmark-list.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>My Bookmarks</h1>
+    <a href="/" style="text-decoration: none; color: inherit;"><h1>My Bookmarks</h1></a>
     <div id="bookmarks-list">
-        <form method="POST">
-            <input type="text" name="bookmarks" placeholder="Type URL to add to bookamrks" required />
+        <form action="/bookmarks" method="POST">
+            <input type="text" name="bookmarkUrl" placeholder="Insert URL" required />
+            <input type="text" name="bookmarkTitle" placeholder="Title of article" required />
+            <input type="text" name="bookmarkPublisher" placeholder="Publisher of article" required />
+            <input type="text" name="bookmarkTags" placeholder="Tags of article seperated by spaces" required />
             <button type="submit" for="bookmarks">Add Bookmark!</button>
         </form>
         <ul>
             <% for(var i=0;i<bookmarks.length;i++){ %>
                 <li class="bookmark-items">
-                    <%= bookmarks[i].link %>
+                    <%= bookmarks[i].bookmarkUrl %>
                     <br>
-                    <%= bookmarks[i].title%>
+                    <%= bookmarks[i].bookmarkTitle%>
                     <ul id="sublist">
-                        <% for(var j=0;j<5;j++){ %>
-                            <li class="sublist-items"><%= bookmarks[i].link %> </li>
+                        <% for(var j=0;j<bookmarks[i].bookmarkTags.length;j++){ %>
+                            <li class="sublist-items"><%= bookmarks[i].bookmarkTags[j] %> </li>
                         <% } %>
                     </ul>
                 </li>

@@ -1,24 +1,22 @@
 $(document).ready(function(){
 
-    $('form').on('submit', function(){
+    // $('form').on('submit', function(){
 
-        var x = $('form input').serialize();
-
-        console.log(x);
-
-        $.ajax({
-          type: 'POST',
-          url: '/bookmarks',
-          data: x,
-          success: function(data){
-            //do something with the data via front-end framework
-            location.reload();
-          }
-        });
+    //     var x = $('form input').serialize();
   
-        return false;
+    //     $.ajax({
+    //       type: 'POST',
+    //       url: '/tags',
+    //       data: x,
+    //       success: function(data){
+    //         //do something with the data via front-end framework
+    //         location.reload();
+    //       }
+    //     });
   
-    });
+    //     return false;
+  
+    // });
   
     $('li').on('click', function(){
   
