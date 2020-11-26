@@ -71,8 +71,6 @@ module.exports = function(app){
 
     app.post('/tags',urlencodedParser,(req,res) => {
 
-        console.log(req.body);
-
         tagsDatabase(req.body).save((err,data) => {
 
                 if(err)
@@ -83,27 +81,22 @@ module.exports = function(app){
                 res.render('tags',{tags: data});
             
             });
-
-        // console.log(tags);
     });
 
     app.delete('/tags/:item',(req,res) => {
         
         console.log(req.params.item);
 
-        var newTags = [];
-        
-        for(var i=0;i<tags.length;i++)
-        {
-            if(tags[i].tagname!==req.params.item.trim())
-                newTags.push(tags[i]);
-        }
+        tagsDatabase.find({tagname: req.params.item}).remove((err,data) => {
 
-        tags = newTags;
+            if(err)
+                throw err;
+            else
+                console.log(data);
 
-        console.log(newTags);
+            res.render('tags',{tags: data});
 
-        res.render('tags',{tags: tags});
+        });
 
     });
 
