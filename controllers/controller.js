@@ -13,14 +13,23 @@ module.exports = function(app){
 
     app.get('/', (req,res) => {
 
-        console.log("ALL IS WELL!!\n");
+        res.render('home-page');
 
-        // res.write(data[0].link);
+    });
+
+    app.get('/bookmarks', (req,res) => {
+
+        console.log("ALL IS WELL!!\n");
 
         res.render('bookmarks',{bookmarks: data});
 
-        res.end('Sab Changa Si!\n');
+    });
 
+    app.post('/bookmarks',urlencodedParser,(req,res) => {
+
+        console.log(req.body);
+
+        res.render('bookmarks',{bookmarks: data});
     });
 
 };
