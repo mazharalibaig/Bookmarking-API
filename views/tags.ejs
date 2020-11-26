@@ -11,23 +11,14 @@
 </head>
 <body>
     <h1>My Tags</h1>
-    <div id="bookmarks-list">
+    <div id="tags-list">
         <form method="POST">
-            <input type="text" name="bookmarks" placeholder="Type URL to add to bookamrks" required />
-            <button type="submit" for="bookmarks">Add Bookmark!</button>
+            <input type="text" name="tags" placeholder="Type to add a tag" required />
+            <button type="submit" for="tags">Add Tag!</button>
         </form>
         <ul>
-            <% for(var i=0;i<bookmarks.length;i++){ %>
-                <li class="bookmark-items">
-                    <%= bookmarks[i].link %>
-                    <br>
-                    <%= bookmarks[i].title%>
-                    <ul id="sublist">
-                        <% for(var j=0;j<5;j++){ %>
-                            <li class="sublist-items"><%= bookmarks[i].link %> </li>
-                        <% } %>
-                    </ul>
-                </li>
+            <% for(var i=0;i<tags.length;i++){ %>
+                <li class='tag-items'><%= tags[i].tagname %></li>
             <% } %> 
         </ul>
     </div>

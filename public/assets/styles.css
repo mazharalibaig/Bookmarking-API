@@ -13,6 +13,15 @@ body{
     box-sizing: border-box;
 }
 
+#tags-list{
+    position: relative;
+    width: 95%;
+    background: #090d13;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -25,6 +34,13 @@ body{
 }
 
 #bookmarks-list form:after{
+    margin: 0;
+    content: '';
+    display: block;
+    clear: both;
+}
+
+#tags-list form:after{
     margin: 0;
     content: '';
     display: block;
@@ -99,7 +115,16 @@ li{
     margin: 1px;
 }
 
+.tag-items{
+    margin: 0 0 0 0;
+}
+
 .bookmark-items:hover{
+    text-decoration: line-through;
+    background: rgba(168, 11, 11, 0.5);
+}
+
+.tag-items:hover{
     text-decoration: line-through;
     background: rgba(168, 11, 11, 0.5);
 }

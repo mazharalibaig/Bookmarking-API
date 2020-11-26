@@ -6,6 +6,7 @@ require('dotenv').config();
 // mongoose.connect(process.env.MONGO_URL,{useNewUrlParser: true});
 
 var data = [{link:'www.xyz.com',title:'asdfsa'},{link:'www.abc.com',title:'gvbhio'}];
+var tags = [{tagname: 'politics'},{tagname: 'science'},{tagname: 'sports'}];
 
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
 
@@ -36,7 +37,7 @@ module.exports = function(app){
 
         console.log("ALL IS WELL!!\n");
 
-        res.render('tags',{bookmarks: data});
+        res.render('tags',{tags: tags});
 
     });
 
@@ -44,7 +45,7 @@ module.exports = function(app){
 
         console.log(req.body);
 
-        res.render('tags',{bookmarks: data});
+        res.render('tags',{tags: tags});
     });
 
 };
