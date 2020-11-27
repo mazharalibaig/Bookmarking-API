@@ -1,11 +1,11 @@
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-
 //to hide mongodbURL
 require('dotenv').config();
 
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+
 //connecting to database
-mongoose.connect(process.env.MONGO_URL,{useNewUrlParser: true});
+mongoose.connect(`${process.env.MONGO_URL}`,{useNewUrlParser: true});
 
 // Both Schemas present below
 var Schema = mongoose.Schema;
