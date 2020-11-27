@@ -21,10 +21,12 @@
         </form>
         <ul>
             <% for(var i=0;i<bookmarks.length;i++){ %>
-                <li class="bookmark-items">
+                <li id="bookmark-items" class="bookmark-items">
                     <%= bookmarks[i].bookmarkUrl %>
                     <br>
                     <%= bookmarks[i].bookmarkTitle%>
+                    <br>
+                    <%= bookmarks[i].bookmarkPublisher %>
                     <ul id="sublist">
                         <% for(var j=0;j<bookmarks[i].bookmarkTopicTags.length;j++){ %>
                             <li class="sublist-items"><%= bookmarks[i].bookmarkTopicTags[j] %> </li>

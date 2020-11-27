@@ -145,6 +145,24 @@ module.exports = function(app){
         });
     });
 
+    app.delete('/bookmarks/:url', (req,res) => {
+
+        console.log('cfjhkl');
+        console.log(req.params.url);
+
+        bookmarksDatabase.find({bookmarkUrl: req.params.url}).remove( (err,data) => {
+
+            if(err)
+                throw err;
+
+            // console.log(data);
+
+            res.render('bookmarks',{bookmarks: data});
+
+        });
+
+    });
+
     app.get('/tags', (req,res) => {
 
         tagsDatabase.find({}, (err,data) => {
@@ -167,11 +185,9 @@ module.exports = function(app){
             });
     });
 
-    app.delete('/tags/:item',(req,res) => {
-        
-        console.log(req.params.item);
+    app.delete('/tags/:tag',(req,res) => {
 
-        tagsDatabase.find({tagname: req.params.item}).remove((err,data) => {
+        tagsDatabase.find({tagname: req.params.tag}).remove((err,data) => {
 
             if(err)
                 throw err;

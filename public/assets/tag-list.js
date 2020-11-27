@@ -22,8 +22,6 @@ $(document).ready(function(){
   
         var tag = $(this).text().trim();
 
-        // console.log(tag);
-
         $.ajax({
           type: 'DELETE',
           url: '/tags/' + tag,

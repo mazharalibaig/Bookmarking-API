@@ -4,8 +4,6 @@ $(document).ready(function(){
 
         var x = $('form input').serialize();
 
-        console.log(x);
-
         $.ajax({
           type: 'POST',
           url: '/bookmarks',
@@ -21,13 +19,12 @@ $(document).ready(function(){
     });
   
     $('li').on('click', function(){
-  
-      // console.log("Clicked!!");
-  
-        var item = $(this).text().trim().replace(/ /g, "-");
+
+        var x = $(this).text().trim().split("\n");
+
         $.ajax({
           type: 'DELETE',
-          url: '/todo/' + item,
+          url: `/bookmarks/${x[0]}`,
           success: function(data){
             //do something with the data via front-end framework
             location.reload();
