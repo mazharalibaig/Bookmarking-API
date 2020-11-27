@@ -9,7 +9,6 @@ $(document).ready(function(){
           url: '/bookmarks',
           data: x,
           success: function(data){
-            //do something with the data via front-end framework
             location.reload();
           }
         });
@@ -18,7 +17,7 @@ $(document).ready(function(){
   
     });
   
-    $('li').on('click', function(){
+  $('li').on('click', function(){
 
         var x = $(this).text().trim().split("\n");
 
@@ -26,11 +25,9 @@ $(document).ready(function(){
           type: 'DELETE',
           url: `/bookmarks/${x[0]}`,
           success: function(data){
-            //do something with the data via front-end framework
             location.reload();
           }
         });
     });
-  
   });
   

@@ -1,10 +1,13 @@
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
+//to hide mongodbURL
 require('dotenv').config();
 
+//connecting to database
 mongoose.connect(process.env.MONGO_URL,{useNewUrlParser: true});
 
+// Both Schemas present below
 var Schema = mongoose.Schema;
 
 var tagSchema = new Schema({
@@ -32,44 +35,14 @@ var bookmarkSchema = new Schema({
 
 },{timestamps: true});
 
+// Models here
 var tagsDatabase = mongoose.model('tags', tagSchema);
 
 var bookmarksDatabase = mongoose.model('bookmarks', bookmarkSchema);
 
-// var tag1 = tagsDatabase({tagname: "tagnamefrommongodb"}).save((err) => {
-
-//     if(err)
-//         throw err;
-    
-//     console.log("Object inserted");
-
-// });
-
-// var tag1 = tagsDatabase.find({tagname: "tagnamefrommongodb"},(err,data) => {
-    
-//     console.log("Found object!");
-
-//     console.log(data);
-// });
-
-// console.log(tag1);
-
-// var x = bookmarksDatabase({bookmarkUrl: 'www.xyz.com',bookmarkTitle: 'this is a title',bookmarkPublisher: 'publisher ka naam',bookmarkTags: [tag1]}).save((err,data) => {
-
-//     if(err)
-//     {
-//         console.log("inser error");
-//         console.log(err);
-//     }
-
-//     console.log(data);
-
-// });
-
-// var data = [{ bookmarkUrl:'www.xyz.com', bookmarkTitle: 'asdfsa', bookmarkPublisher: 'adsfgsfd',bookmarkTags: ['tag1','tag2','tag3']},{bookmarkUrl:'www.xyz.com', bookmarkTitle: 'asdfsa', bookmarkPublisher: 'adsfgsfd',bookmarkTags: ['tag1','tag2','tag3']}];
-// var tags = [{tagname: 'politics'},{tagname: 'science'},{tagname: 'sports'}];
-
+// for parsing body of requests
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
+
 
 module.exports = function(app){
 
@@ -81,6 +54,7 @@ module.exports = function(app){
 
     app.get('/bookmarks', (req,res) => {
 
+        //listing all bookmarks
         bookmarksDatabase.find({}, (err,data) => {
 
             if(err)
@@ -94,10 +68,10 @@ module.exports = function(app){
 
     app.post('/bookmarks',urlencodedParser,(req,res) => {
 
-        console.log(req.body);
-
+        // as tags are seperated by spaces we are creating a new array to store all tag names
         var tagsStringArr = req.body.bookmarkTags.split(" ");
 
+        // object that represents bookmark schema
         var bookmarkObject = {
 
             bookmarkUrl: req.body.bookmarkUrl, 
@@ -107,15 +81,18 @@ module.exports = function(app){
         
         };
 
+        // function to check whether tag is in database or not, if not will be inserted
         tagsStringArr.forEach( (e) => {
 
             tagsDatabase.find({tagname: e}, (err,data) => {
 
                 if(err)
                     throw err;
-
+                
+                // if not found in DB
                 if(data.length === 0)
                 {
+                    // new tag inserted
                     tagsDatabase({tagname: e}).save((err,data) => {
 
                         if(err)
@@ -131,8 +108,7 @@ module.exports = function(app){
         
         });
 
-        console.log(bookmarkObject);
-
+        // new bookmark created after ensuring all tags inserted in DB
         bookmarksDatabase(bookmarkObject).save((err,data) => {
 
             if(err)
@@ -147,15 +123,11 @@ module.exports = function(app){
 
     app.delete('/bookmarks/:url', (req,res) => {
 
-        console.log('cfjhkl');
-        console.log(req.params.url);
-
+        // finding the document in DB and removing it
         bookmarksDatabase.find({bookmarkUrl: req.params.url}).remove( (err,data) => {
 
             if(err)
                 throw err;
-
-            // console.log(data);
 
             res.render('bookmarks',{bookmarks: data});
 
@@ -165,6 +137,7 @@ module.exports = function(app){
 
     app.get('/tags', (req,res) => {
 
+        // listing all tags
         tagsDatabase.find({}, (err,data) => {
 
             if(err)
@@ -176,6 +149,7 @@ module.exports = function(app){
 
     app.post('/tags',urlencodedParser,(req,res) => {
 
+        // inserting tag into DB
         tagsDatabase(req.body).save((err,data) => {
 
                 if(err)
@@ -187,6 +161,7 @@ module.exports = function(app){
 
     app.delete('/tags/:tag',(req,res) => {
 
+        //finding tag and deleting it
         tagsDatabase.find({tagname: req.params.tag}).remove((err,data) => {
 
             if(err)

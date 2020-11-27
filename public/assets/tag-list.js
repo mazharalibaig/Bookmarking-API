@@ -9,7 +9,6 @@ $(document).ready(function(){
           url: '/tags',
           data: x,
           success: function(data){
-            //do something with the data via front-end framework
             location.reload();
           }
         });
@@ -26,10 +25,7 @@ $(document).ready(function(){
           type: 'DELETE',
           url: '/tags/' + tag,
           success: function(data){
-
-            //do something with the data via front-end framework
             location.reload();
-          
           }
         });
     });
