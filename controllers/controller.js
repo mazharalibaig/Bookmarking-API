@@ -23,14 +23,12 @@ var bookmarkSchema = new Schema({
         unique: true
     },
     bookmarkTitle: {
-        type: String,
-        unique: true
+        type: String
     },
     bookmarkPublisher: {
-        type: String,
-        unique: true
+        type: String
     },
-    bookmarkTags: [{type: String}]
+    bookmarkTopicTags: [String]
 
 },{timestamps: true});
 
@@ -68,7 +66,7 @@ var bookmarksDatabase = mongoose.model('bookmarks', bookmarkSchema);
 
 // });
 
-var data = [{ bookmarkUrl:'www.xyz.com', bookmarkTitle: 'asdfsa', bookmarkPublisher: 'adsfgsfd',bookmarkTags: ['tag1','tag2','tag3']},{bookmarkUrl:'www.xyz.com', bookmarkTitle: 'asdfsa', bookmarkPublisher: 'adsfgsfd',bookmarkTags: ['tag1','tag2','tag3']}];
+// var data = [{ bookmarkUrl:'www.xyz.com', bookmarkTitle: 'asdfsa', bookmarkPublisher: 'adsfgsfd',bookmarkTags: ['tag1','tag2','tag3']},{bookmarkUrl:'www.xyz.com', bookmarkTitle: 'asdfsa', bookmarkPublisher: 'adsfgsfd',bookmarkTags: ['tag1','tag2','tag3']}];
 // var tags = [{tagname: 'politics'},{tagname: 'science'},{tagname: 'sports'}];
 
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
@@ -98,49 +96,53 @@ module.exports = function(app){
 
         console.log(req.body);
 
-        var tagsArr = req.body.bookmarkTags.split(" ");
-
-        console.log(tagsArr);
+        var tagsStringArr = req.body.bookmarkTags.split(" ");
 
         var bookmarkObject = {
 
-                bookmarkUrl: req.body.bookmarkUrl, 
-                bookmarkTitle: req.body.bookmarkTitle, 
-                bookmarkPublisher: req.body.bookmarkPublisher, 
-                bookmarkTags: tagsArr
-            
-            };
+            bookmarkUrl: req.body.bookmarkUrl, 
+            bookmarkTitle: req.body.bookmarkTitle, 
+            bookmarkPublisher: req.body.bookmarkPublisher, 
+            bookmarkTopicTags: tagsStringArr
+        
+        };
+
+        tagsStringArr.forEach( (e) => {
+
+            tagsDatabase.find({tagname: e}, (err,data) => {
+
+                if(err)
+                    throw err;
+
+                if(data.length === 0)
+                {
+                    tagsDatabase({tagname: e}).save((err,data) => {
+
+                        if(err)
+                        {
+                            console.log("Error in creating tag\n");
+                            throw err;
+                        }
+
+                    });
+                }
+
+            });
+        
+        });
 
         console.log(bookmarkObject);
 
-        // tagsArr.forEach( bookmarkTag => {
-            
-        //     console.log("bookmarktag");
-        //     console.log(bookmarkTag);
+        bookmarksDatabase(bookmarkObject).save((err,data) => {
 
-        //     tagsDatabase.find({tagname: bookmarkTag}, (err,data) => {
+            if(err)
+                throw err;
 
-        //         if(err)
-        //         {
-        //             console.log(err);
-        //             throw err;
-        //         }
+            console.log(data);
 
-        //         console.log("What I found!");
-        //         console.log(data);
+            res.render('bookmarks',{bookmarks: data});
 
-        //     });
-
-        // });
-
-        // bookmarksDatabase(bookmarkObject).save((err,data) => {
-
-        //     if(err)
-        //         throw err;
-
-        //         res.render('bookmarks',{bookmarks: data});
-
-        // });
+        });
     });
 
     app.get('/tags', (req,res) => {
