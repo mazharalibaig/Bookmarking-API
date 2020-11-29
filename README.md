@@ -9,6 +9,6 @@ New tags that are inserted with bookmarks will automatically be added to tags se
 # Bookamrks Page 
 ![](bookmark-api-photos/form-filling.png)
 # Bookmarks Listed - Click to delete 
-![](bookmark-api-photos/homepage.png)
+![](bookmark-api-photos/rsz_bookmark-delete.png)
 # Tags - Click to delete 
 ![](bookmark-api-photos/rsz_tag-delete.png)
